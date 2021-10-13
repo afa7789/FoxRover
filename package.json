@@ -1,0 +1,24 @@
+{
+  "name": "fox-rover",
+  "version": "1.0.0",
+  "description": "A simple node.js showcase of unit testing and programming logic",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afa7789/fox-rover.git"
+  },
+  "keywords": [
+    "rover",
+    "js",
+    "unit-test"
+  ],
+  "author": "Arthur de Freitas Abeilice",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/afa7789/fox-rover/issues"
+  },
+  "homepage": "https://github.com/afa7789/fox-rover#readme"
+}
