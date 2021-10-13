@@ -1,6 +1,6 @@
 ![!FoxRover](resources/foxrover.png)
 # Fox Rover
-
+A simple Node.js showcase of unit testing / logics
 
 ## **Problem**
 A squad of robotic rovers are to be landed by NASA on a plateau on
