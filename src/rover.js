@@ -108,7 +108,7 @@ export class LogicState{
         }
     */
     constructor(payload){
-        this.errors = ['teste']
+        this.errors = []
         this.control_failure = this.validate_parse(payload)
         this.commands1 = payload.rover1.commands
         this.commands2 = payload.rover2.commands 
@@ -129,7 +129,6 @@ export class LogicState{
     intParserHere(variable,var_name){
         try{
             variable = parseInt(variable);
-            console.log(var_name,variable)
             if( variable <= 0){
                 this.errors.push(var_name+" need to be bigger than zero")
                 return false
@@ -163,7 +162,7 @@ export class LogicState{
 
     executeLogic(){
         if(!this.control_failure){
-            return {status:false,msg:"wrong validation"+this.errors.toString()};
+            return {status:false,msg:"wrong validation: "+this.errors.toString()};
         }else{
             return true;
         }

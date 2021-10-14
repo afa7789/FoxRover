@@ -106,7 +106,7 @@ async function initiliaze(){
     //LogicState imported to run over the code needs
     let ls = new LogicState(readLines(lines))
     let returned_ls = ls.executeLogic()
-    if(returned_ls.status){
+    if(!returned_ls.status){
         exitFunction(returned_ls.msg)
     }
 }
