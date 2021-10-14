@@ -108,6 +108,8 @@ async function initiliaze(){
     let returned_ls = ls.executeLogic()
     if(!returned_ls.status){
         exitFunction(returned_ls.msg)
+    }else{
+        
     }
 }
 

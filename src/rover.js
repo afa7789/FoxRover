@@ -150,7 +150,7 @@ export class LogicState{
     validate_parse(payload){
         let boolean_control = true
         this.intParserHere(payload.width,"width") ? '' : boolean_control =false
-        this.intParserHere(payload.heigth,"heigth") ? '' : boolean_control =false
+        this.intParserHere(payload.height,"heigth") ? '' : boolean_control =false
         this.intParserHere(payload.rover1.x,"rover1 x") ? '' : boolean_control =false
         this.intParserHere(payload.rover1.y,"rover1 y") ? '' : boolean_control =false
         this.intParserHere(payload.rover2.x,"rover2 x") ? '' : boolean_control =false
@@ -164,7 +164,7 @@ export class LogicState{
         if(!this.control_failure){
             return {status:false,msg:"wrong validation: "+this.errors.toString()};
         }else{
-            return true;
+            return {status:true};
         }
     }
 }
