@@ -1,6 +1,6 @@
 ![!FoxRover](resources/foxrover.png)
 # Fox Rover
-A simple Node.js showcase of unit testing / logics
+A simple Node.js showcase of unit testing with Mocha / logics and programming domain with Js functions/classes features etc.
 
 ## Running the code
 
