@@ -12,7 +12,7 @@ A simple Node.js showcase of unit testing / logics
 
 or
 
-`ǹode main.js file`
+`node main.js file`
 
 check test files on tests folder.
 
