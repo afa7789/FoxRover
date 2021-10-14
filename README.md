@@ -34,7 +34,51 @@ Instead of testing small pieces i'm testing the entry and it's error code output
 
 ### Unit Testing
 
-To be done, this will test smaller piece of codes to check if anyone broke a function/whatever it will be stored in the first_test.js, it's mainly to show the domain over assert/unit testknowledge
+This will test smaller piece of codes to check if anyone broke a function/whatever it will be stored in the first_test.js, it's mainly to show the domain over assert/unit test knowledge
+
+### Test Output
+
+```
+> fox-rover@1.0.0 test /fox-rover
+> ./node_modules/mocha/bin/mocha
+
+
+
+  Test LogicState Validation
+    #Sucessfull Validation
+      ✔ should return true
+    #Failing Validation
+      ✔ fails validation for wrong width
+      ✔ fails validation for wrong height
+      ✔ fails validation for wrong position x
+      ✔ fails validation for wrong position y
+      ✔ fails validation for wrong cardinal
+
+  Test CommandRead
+    #Succesfull Commands
+1 3 N
+5 1 E
+returned ls { status: true }
+      ✔ rover commands succeded
+    #Failing Commands
+3 4 N
+5 1 E
+      ✔ fails commands for wrong input
+1 10 N
+5 1 E
+      ✔ fails commands for out of bounds
+
+  Sucessfull TestCases
+    ✔ normal case exceds test (57ms)
+
+  Failure TestCases
+    ✔ out_of_bounds fail in test (54ms)
+    ✔ validation fail in test (55ms)
+    ✔ validation fail in test (57ms)
+
+
+  13 passing (235ms)
+```
 
 ## **Problem**
 A squad of robotic rovers are to be landed by NASA on a plateau on
