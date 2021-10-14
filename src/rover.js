@@ -1,3 +1,4 @@
+import { parse } from "path";
 
 const cardinals = {
  "N":0,
@@ -10,9 +11,9 @@ class Rover {
 
     // tables with function calls
     tableFunctions = {
-        'R' : rotateRight(),
-        'L' : rotateLeft(),
-        'M' : move()
+        'R' : ()=>{this.rotateRight()},
+        'L' : ()=>{this.rotateLeft()},
+        'M' : ()=>{this.move()}
     }
 
     // tables with moves
@@ -59,8 +60,9 @@ class Rover {
 
     //move , i mean change the X and Y
     move(){
-        this.X += tableMove[this.direction].X
-        this.Y += tableMove[this.direction].Y
+        var number = this.direction
+        this.X += this.tableMove[number].X
+        this.Y += this.tableMove[number].Y
         return { X: this.X, Y: this.Y}
     }
 
@@ -87,18 +89,88 @@ class Rover {
 
 export class LogicState{
 
-    //constructor for LogicState
+    /*constructor for LogicState
+        payload:{
+            width:width,
+            height:height,
+            rover1:{
+                x:xpos1,
+                y:ypos1,
+                cardinal:cardinal1,
+                commands:rover1_commands
+            },
+            rover2:{
+                x:xpos2,
+                y:ypos2,
+                cardinal:cardinal2,
+                commands:rover2_commands
+            }
+        }
+    */
     constructor(payload){
-        this.control_failure = validate(payload)
-        this.rover1 = Rover()
-        payload;
-
+        this.errors = ['teste']
+        this.control_failure = this.validate_parse(payload)
+        this.commands1 = payload.rover1.commands
+        this.commands2 = payload.rover2.commands 
+        this.rover1 = new Rover(payload.rover1.x,payload.rover1.y,payload.rover1.cardinal)
+        this.rover2 = new Rover(payload.rover1.x,payload.rover1.y,payload.rover1.cardinal)
     }
 
-    //validate if the input from payload is valid,
-    //if false should fail on execute
-    validate(){
-        return true;
+    //check if cardinal is correct
+    cardinalCheck(variable,var_name){
+        if( !(variable.toUpperCase() in cardinals) ){
+            this.errors.push("invalid cardinal for "+var_name)
+            return false
+        }
+        return true
+    }
+
+    //parseInt in variable check for errors
+    intParserHere(variable,var_name){
+        try{
+            variable = parseInt(variable);
+            console.log(var_name,variable)
+            if( variable <= 0){
+                this.errors.push(var_name+" need to be bigger than zero")
+                return false
+            }
+            if( isNaN(variable) ){
+                this.errors.push(var_name+" need to be a number")
+                return false
+            }
+            return true
+        } catch (error) {
+            this.errors.push(error+var_name)
+            return false
+        }
+    }
+
+    // validate if the input from payload is valid,
+    // if false should fail on execute
+    // parse to int payload too
+    validate_parse(payload){
+        let boolean_control = true
+
+        this.intParserHere("arthur","arthur")
+
+        this.intParserHere(payload.width,"width")
+        this.intParserHere(payload.heigth,"heigth")
+        this.intParserHere(payload.rover1.x,"rover1 x")
+        this.intParserHere(payload.rover1.y,"rover1 y")
+        this.intParserHere(payload.rover2.x,"rover2 x")
+        this.intParserHere(payload.rover2.y,"rover2 y")
+        this.cardinalCheck(payload.rover1.cardinal,"rover1")
+        this.cardinalCheck(payload.rover2.cardinal,"rover1")
+        console.log(this.errors)
+        return boolean_control;
+    }
+
+    executeLogic(){
+        if(!this.control_failure){
+            return {status:false,msg:"wrong validation"+this.errors.toString()};
+        }else{
+            return true;
+        }
     }
 }
 

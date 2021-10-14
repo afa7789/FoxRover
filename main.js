@@ -49,7 +49,7 @@ function readLines(lines){
 
     // returning formated 
     return {
-        widht:width,
+        width:width,
         height:height,
         rover1:{
             x:xpos1,
@@ -103,9 +103,12 @@ async function initiliaze(){
         lines = getUserInput()
     }
 
-    // LogicState imported to run over
-    ls = LogicState(readLines(lines))
-    ls.executeLogic()
+    //LogicState imported to run over the code needs
+    let ls = new LogicState(readLines(lines))
+    let returned_ls = ls.executeLogic()
+    if(returned_ls.status){
+        exitFunction(returned_ls.msg)
+    }
 }
 
 initiliaze()
