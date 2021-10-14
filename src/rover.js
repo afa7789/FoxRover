@@ -1,4 +1,3 @@
-import { parse } from "path";
 
 const cardinals = {
  "N":0,
@@ -11,9 +10,9 @@ class Rover {
 
     // tables with function calls
     tableFunctions = {
-        'R' : ()=>{this.rotateRight()},
-        'L' : ()=>{this.rotateLeft()},
-        'M' : ()=>{this.move()}
+        'R' : this.rotateRight,
+        'L' : this.rotateLeft,
+        'M' : this.move
     }
 
     // tables with moves
@@ -43,33 +42,39 @@ class Rover {
     }
     
     // rotate left decreases 90 degress
-    rotateLeft(){
-        this.direction -= 90;
-        if ( this.direction < 0 ){
-            this.direction += 360
+    rotateLeft(direction){
+        direction -= 90;
+        if ( direction < 0 ){
+            direction += 360
         }
+        return direction
     }
 
     // rotate right increase 90 degress
-    rotateRight(){
-        this.direction += 90;
-        if ( this.direction >= 360 ){
-            this.direction -= 360
+    rotateRight(direction){
+        direction += 90;
+        if ( direction >= 360 ){
+            direction -= 360
         }
+        return direction
     }
 
     //move , i mean change the X and Y
-    move(){
-        var number = this.direction
-        this.X += this.tableMove[number].X
-        this.Y += this.tableMove[number].Y
-        return { X: this.X, Y: this.Y}
+    move(direction,tableMove){
+        var number = direction
+        return { X: tableMove[number].X, Y: tableMove[number].Y}
     }
 
     // receive Entry receives an Letter and returns true or false if acceptable, and move if correct
     receiveEntry(entry){
         if (entry in this.tableFunctions ){
-            this.tableFunctions[entry];
+            if ( entry != 'M'){
+                this.direction = this.tableFunctions[entry](this.direction);
+            }else{
+                var new_pos = this.tableFunctions[entry](this.direction,this.tableMove);
+                this.X += new_pos.X
+                this.Y += new_pos.Y
+            }
             return true;
         }else{
             return false;
@@ -83,7 +88,13 @@ class Rover {
 
     // getCardinal, returns the cardinal Letter according to the angle
     getCardinal(){
-        return Object.keys(cardinals).find(key => object[key] === this.angle);
+        return Object.keys(cardinals).find(key => cardinals[key] === this.direction);
+    }
+
+    // print as correct
+    prettyPrintRover(){
+        // 5 1 E
+        console.log(this.X + " " + this.Y + " " + this.getCardinal())
     }
 }
 
@@ -110,10 +121,20 @@ export class LogicState{
     constructor(payload){
         this.errors = []
         this.control_failure = this.validate_parse(payload)
+        this.width = payload.width
+        this.height = payload.height
         this.commands1 = payload.rover1.commands
         this.commands2 = payload.rover2.commands 
-        this.rover1 = new Rover(payload.rover1.x,payload.rover1.y,payload.rover1.cardinal)
-        this.rover2 = new Rover(payload.rover1.x,payload.rover1.y,payload.rover1.cardinal)
+        this.rover1 = new Rover(
+            parseInt(payload.rover1.x),
+            parseInt(payload.rover1.y),
+            payload.rover1.cardinal
+        )
+        this.rover2 = new Rover(
+            parseInt(payload.rover2.x),
+            parseInt(payload.rover2.y),
+            payload.rover2.cardinal
+        )
     }
 
     //check if cardinal is correct
@@ -160,11 +181,42 @@ export class LogicState{
         return boolean_control;
     }
 
+    executeRover(array,rover,rover_name){
+        let status = true
+        var pos
+        array.map((value)=>{
+            if (rover.receiveEntry(value) ){
+                pos = rover.getPosition();
+                if( pos.X > this.width || pos.X < 0 ){
+                    this.errors.push("wrong position for "+rover_name+" , it's out of bounds: "+pos.toString())
+                    status = false
+                }
+                if( pos.Y > this.height || pos.Y < 0 ){
+                    this.errors.push("wrong position for "+rover_name+" , it's out of bounds: "+pos.toString())
+                    status = false
+                }
+            }else{
+                this.errors.push("wrong command for "+rover_name+" == "+value)
+                status = false
+            }
+        });
+        return status
+    }
+
     executeLogic(){
         if(!this.control_failure){
             return {status:false,msg:"wrong validation: "+this.errors.toString()};
         }else{
-            return {status:true};
+            let status = true;
+            //rover1
+            this.executeRover(this.commands1,this.rover1,"rover1") ? '' : status=false
+            //rover2
+            this.executeRover(this.commands2,this.rover2,"rover2") ? '' : status=false
+            
+            this.rover1.prettyPrintRover()
+            this.rover2.prettyPrintRover()
+
+            return (status) ? {status:status}: {status:status ,msg:"failure in rover procedure: "+this.errors.toString()}
         }
     }
 }
