@@ -16,6 +16,26 @@ or
 
 check test files on tests folder.
 
+## Testing
+
+I'm using Mocha to run it is:
+
+`./node_modules/mocha/bin/mocha`
+
+or
+
+`npm test`
+
+### Whole Testing
+
+I'm doing a little more complex testing in the *second_test.js* i call the node main.js with the tests_cases and getting the exit code of the node. This works fine as a test because i've covered the erros in the programn to be exited with error code, by doing so i can use this to test the application as a whole.
+
+Instead of testing small pieces i'm testing the entry and it's error code output
+
+### Unit Testing
+
+To be done.
+
 ## **Problem**
 A squad of robotic rovers are to be landed by NASA on a plateau on
 Mars. This plateau, which is curiously rectangular, must be navigated
