@@ -150,18 +150,14 @@ export class LogicState{
     // parse to int payload too
     validate_parse(payload){
         let boolean_control = true
-
-        this.intParserHere("arthur","arthur")
-
-        this.intParserHere(payload.width,"width")
-        this.intParserHere(payload.heigth,"heigth")
-        this.intParserHere(payload.rover1.x,"rover1 x")
-        this.intParserHere(payload.rover1.y,"rover1 y")
-        this.intParserHere(payload.rover2.x,"rover2 x")
-        this.intParserHere(payload.rover2.y,"rover2 y")
-        this.cardinalCheck(payload.rover1.cardinal,"rover1")
-        this.cardinalCheck(payload.rover2.cardinal,"rover1")
-        console.log(this.errors)
+        this.intParserHere(payload.width,"width") ? '' : boolean_control =false
+        this.intParserHere(payload.heigth,"heigth") ? '' : boolean_control =false
+        this.intParserHere(payload.rover1.x,"rover1 x") ? '' : boolean_control =false
+        this.intParserHere(payload.rover1.y,"rover1 y") ? '' : boolean_control =false
+        this.intParserHere(payload.rover2.x,"rover2 x") ? '' : boolean_control =false
+        this.intParserHere(payload.rover2.y,"rover2 y") ? '' : boolean_control =false
+        this.cardinalCheck(payload.rover1.cardinal,"rover1") ? '' : boolean_control =false
+        this.cardinalCheck(payload.rover2.cardinal,"rover1") ? '' : boolean_control =false
         return boolean_control;
     }
 
