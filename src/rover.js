@@ -181,16 +181,21 @@ export class LogicState{
         return boolean_control;
     }
 
+    //executeRover, receives array with commands and if they're correct execute, else it will return false
+    // this changes the positions
+    // check for out of bounds too
     executeRover(array,rover,rover_name){
         let status = true
         var pos
         array.map((value)=>{
             if (rover.receiveEntry(value) ){
                 pos = rover.getPosition();
+                // check if x is larger/lesser than the limits
                 if( pos.X > this.width || pos.X < 0 ){
                     this.errors.push("wrong position for "+rover_name+" , it's out of bounds- X:" +pos.X+" Y"+pos.Y+'\n')
                     status = false
                 }
+                // check if y is larger/lesser than the limits
                 if( pos.Y > this.height || pos.Y < 0 ){
                     this.errors.push("wrong position for "+rover_name+" , it's out of bounds- X:" +pos.X+" Y:"+pos.Y+'\n')
                     status = false
@@ -203,9 +208,12 @@ export class LogicState{
         return status
     }
 
+    //Execute Logic
     executeLogic(){
+        //check failure in validate
         if(!this.control_failure){
             return {status:false,msg:"wrong validation: "+this.errors.toString()};
+        // normal flow
         }else{
             let status = true;
             //rover1
@@ -213,20 +221,12 @@ export class LogicState{
             //rover2
             this.executeRover(this.commands2,this.rover2,"rover2") ? '' : status=false
             
+            //print results
             this.rover1.prettyPrintRover()
             this.rover2.prettyPrintRover()
 
+            // if failure return error msg
             return (status) ? {status:status}: {status:status ,msg:"failure in rover procedure: "+this.errors.toString()}
         }
     }
 }
-
-//.map((x)=>{return parseInt(x)}) // dois ints, {width,height}
-/*
-    try {
-        intValue = Integer.parseInt(string);
-        return true;
-    } catch (NumberFormatException e) {
-        System.out.println("Input String cannot be parsed to Integer.");
-    }
-*/
