@@ -147,7 +147,7 @@ describe('Test LogicState Validation',function(){
 
 describe('Test CommandRead',function(){
     describe('#Succesfull Commands',function(){
-        it('rover commands return true', function() {
+        it('rover commands succeded', function() {
             let payload = {
                 width:5,
                 height:5,
@@ -155,23 +155,25 @@ describe('Test CommandRead',function(){
                     x:1,
                     y:2,
                     cardinal:"N",
-                    commands:"LRLRLRLRLRLMM"
+                    commands: [..."LMLMLMLMM"]
                 },
                 rover2:{
-                    x:4,
-                    y:4,
-                    cardinal:"N",
-                    commands:"LRLRLRLRLRLMM"
+                    x:3,
+                    y:3,
+                    cardinal:"E",
+                    commands: [..."MMRMMRMRRM"]
                 }
             }
 
             let ls = new LogicState(payload)
-            assert.equal(ls.executeLogic().status,true)
+            let returned_ls = ls.executeLogic()
+            console.log('returned ls',returned_ls)
+            assert.equal(returned_ls.status,true)
         });
     });
 
     describe('#Failing Commands',function(){
-        it('fails validation for wrong cardinal', function() {
+        it('fails commands for wrong input', function() {
             let payload = {
                 width:5,
                 height:5,
@@ -179,13 +181,34 @@ describe('Test CommandRead',function(){
                     x:1,
                     y:2,
                     cardinal:"N",
-                    commands:"LRLRLTTTTRLRLRLMM"
+                    commands:[..."MMRMMRMRRMTT"]
                 },
                 rover2:{
-                    x:4,
-                    y:4,
+                    x:3,
+                    y:3,
+                    cardinal:"E",
+                    commands:[..."MMRMMRMRRM"]
+                }
+            }
+            
+            let ls = new LogicState(payload)
+            assert.equal(ls.executeLogic().status,false)
+        });
+        it('fails commands for out of bounds', function() {
+            let payload = {
+                width:5,
+                height:5,
+                rover1:{
+                    x:1,
+                    y:2,
                     cardinal:"N",
-                    commands:"LRLRLRLRLRLMM"
+                    commands:[..."LMLMLMLMMMMMMMMM"]
+                },
+                rover2:{
+                    x:3,
+                    y:3,
+                    cardinal:"E",
+                    commands:[..."MMRMMRMRRM"]
                 }
             }
             
