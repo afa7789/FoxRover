@@ -140,7 +140,7 @@ export class LogicState{
     //check if cardinal is correct
     cardinalCheck(variable,var_name){
         if( !(variable.toUpperCase() in cardinals) ){
-            this.errors.push("invalid cardinal for "+var_name)
+            this.errors.push("invalid cardinal for "+var_name+'\n')
             return false
         }
         return true
@@ -151,16 +151,16 @@ export class LogicState{
         try{
             variable = parseInt(variable);
             if( variable <= 0){
-                this.errors.push(var_name+" need to be bigger than zero")
+                this.errors.push(var_name+" need to be bigger than zero"+'\n')
                 return false
             }
             if( isNaN(variable) ){
-                this.errors.push(var_name+" need to be a number")
+                this.errors.push(var_name+" need to be a number"+'\n')
                 return false
             }
             return true
         } catch (error) {
-            this.errors.push(error+var_name)
+            this.errors.push(error+var_name+'\n')
             return false
         }
     }
@@ -188,15 +188,15 @@ export class LogicState{
             if (rover.receiveEntry(value) ){
                 pos = rover.getPosition();
                 if( pos.X > this.width || pos.X < 0 ){
-                    this.errors.push("wrong position for "+rover_name+" , it's out of bounds: "+pos.toString())
+                    this.errors.push("wrong position for "+rover_name+" , it's out of bounds- X:" +pos.X+" Y"+pos.Y+'\n')
                     status = false
                 }
                 if( pos.Y > this.height || pos.Y < 0 ){
-                    this.errors.push("wrong position for "+rover_name+" , it's out of bounds: "+pos.toString())
+                    this.errors.push("wrong position for "+rover_name+" , it's out of bounds- X:" +pos.X+" Y:"+pos.Y+'\n')
                     status = false
                 }
             }else{
-                this.errors.push("wrong command for "+rover_name+" == "+value)
+                this.errors.push("wrong command for "+rover_name+" == "+value+'\n')
                 status = false
             }
         });
