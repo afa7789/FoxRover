@@ -34,7 +34,7 @@ Instead of testing small pieces i'm testing the entry and it's error code output
 
 ### Unit Testing
 
-To be done.
+To be done, this will test smaller piece of codes to check if anyone broke a function/whatever it will be stored in the first_test.js, it's mainly to show the domain over assert/unit testknowledge
 
 ## **Problem**
 A squad of robotic rovers are to be landed by NASA on a plateau on
