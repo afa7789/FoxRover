@@ -85,15 +85,29 @@ class Rover {
     }
 }
 
-class logicState{
+export class LogicState{
 
-    constructor(starting){
-        if ( validate() ){
-            this.algo = starting;
-        }
+    //constructor for LogicState
+    constructor(payload){
+        this.control_failure = validate(payload)
+        this.rover1 = Rover()
+        payload;
+
     }
 
+    //validate if the input from payload is valid,
+    //if false should fail on execute
     validate(){
         return true;
     }
 }
+
+//.map((x)=>{return parseInt(x)}) // dois ints, {width,height}
+/*
+    try {
+        intValue = Integer.parseInt(string);
+        return true;
+    } catch (NumberFormatException e) {
+        System.out.println("Input String cannot be parsed to Integer.");
+    }
+*/

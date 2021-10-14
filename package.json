@@ -1,6 +1,6 @@
 {
   "name": "fox-rover",
-  "type":"module",
+  "type": "module",
   "version": "1.0.0",
   "description": "A simple node.js showcase of unit testing and programming logic",
   "main": "main.js",
@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/afa7789/fox-rover/issues"
   },
-  "homepage": "https://github.com/afa7789/fox-rover#readme"
+  "homepage": "https://github.com/afa7789/fox-rover#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
 }
