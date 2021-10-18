@@ -4,7 +4,7 @@ A simple Node.js showcase of unit testing with Mocha / logics and programming do
 
 ## Running the code
 
-`git clone https://github.com/afa7789/fox-rover`
+`git clone https://github.com/afa7789/FoxRover fox-rover`
 
 `cd fox-rover`
 
